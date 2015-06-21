@@ -26,7 +26,5 @@ source "$GOPATH/src/github.com/mcartmell/limeline/tmux.conf"
 
 ## TODO
 
-* Configurable panes
-* Colours
 * Daemon mode
-* Plugins
+* More plugins

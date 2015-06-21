@@ -3,54 +3,41 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
 )
 
+const DEFAULT_FG = "colour154"
+const DEFAULT_BG = "colour234"
+
 // Display these panes in order
-var Panes = [...]string{"loadavg", "sghaze", "datetime"}
+var Panes = []string{"loadavg", "sghaze", "datetime"}
 
 // Functions to call to load each pane
-var Callbacks = map[string]func() string{
-	"loadavg":  paneLoadAvg,
-	"sghaze":   paneSGHaze,
-	"datetime": paneDateTime,
+var PaneConfig = map[string]map[string]interface{}{
+	"loadavg": {
+		"callback": paneLoadAvg,
+	},
+	"sghaze": {
+		"callback": paneSGHaze,
+	},
+	"datetime": {
+		"callback": paneDateTime,
+	},
 }
 
 // Main program. Only supports the right statusbar for now.
 func main() {
 	flag.Parse()
+	loadConfig()
 	args := flag.Args()
 	if len(args) > 0 {
 		switch args[0] {
 		case "right":
 			printStatusRight()
+		default:
+			log.Fatal("Usage: limeline right")
 		}
+	} else {
+		log.Fatal("Usage: limeline right")
 	}
-}
-
-// Prints the right statusbar
-func printStatusRight() {
-	for i, p := range Panes {
-		includeSep := !(i == len(Panes)-1)
-		content := Callbacks[p]()
-		printRightPane(content, includeSep)
-	}
-	return
-}
-
-// Prints an individual pane
-func printRightPane(content string, includeSep bool) {
-	fmt.Print(resetColour(content))
-	if includeSep {
-		fmt.Print(rightSep())
-	}
-}
-
-// Helpers to format the status bar
-func rightSep() string {
-	return "#[fg=colour244,bg=colour234]  "
-}
-
-func resetColour(str string) string {
-	return ("#[default]" + str)
 }

@@ -1,0 +1,10 @@
+panes: [loadavg, sghaze, datetime]
+plugins:
+  loadavg:
+    bg: colour154
+    fg: colour16
+  sghaze:
+    fg: colour82
+  datetime:
+    fg: colour250
+    bg: colour239

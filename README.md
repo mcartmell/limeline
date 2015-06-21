@@ -35,7 +35,7 @@ Copy in the sample config to `~/.config/limeline/config.yaml`:
 
 ```
 mkdir -p ~/.config/limeline
-cp $GOPATH/src/github.com/mcartmell/limeline/config.sample.yaml ~/.config/limeline
+cp $GOPATH/src/github.com/mcartmell/limeline/config.sample.yaml ~/.config/limeline/config.yaml
 ```
 
 ## Configuration

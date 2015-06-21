@@ -6,7 +6,7 @@ My simple statusbar for tmux inspired by [Powerline](https://github.com/powerlin
 
 ## Status
 
-Just started. I love [Powerline](https://github.com/powerline/powerline) but I suck at Python and always seem to have
+Just started. I :heart: [Powerline](https://github.com/powerline/powerline) but I suck at Python and always seem to have
 trouble installing it. I already use [vim-airline](https://github.com/bling/vim-airline) for vim; this is my quick fix
 to reproduce my powerline statusbar without powerline.
 

@@ -2,6 +2,8 @@
 
 My simple statusbar for tmux inspired by [Powerline](https://github.com/powerline/powerline) and [vim-airline](https://github.com/bling/vim-airline)
 
+![img](https://github.com/mcartmell/limeline/wiki/screenshots/limeline.png)
+
 ## Status
 
 Just started. I love [Powerline](https://github.com/powerline/powerline) but I suck at Python and always seem to have

@@ -10,10 +10,18 @@ to reproduce my powerline statusbar without powerline.
 
 ## Installing
 
+Make sure `$GOPATH/bin` is added to your `$PATH`
+
 Get the binary the Go way:
 
 ```
 $ go get github.com/mcartmell/limeline
+```
+
+Then add to your `~/.tmux.conf`:
+
+```
+source "$GOPATH/src/github.com/mcartmell/limeline/tmux.conf"
 ```
 
 ## TODO

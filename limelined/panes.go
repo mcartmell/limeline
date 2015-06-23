@@ -10,6 +10,25 @@ import (
 	"time"
 )
 
+// Display these panes in order
+var Panes = []string{"loadavg", "sghaze", "datetime"}
+
+// Functions to call to load each pane
+var PaneConfig = map[string]map[string]interface{}{
+	"loadavg": {
+		"callback": paneLoadAvg,
+		"interval": 5,
+	},
+	"sghaze": {
+		"callback": paneSGHaze,
+		"interval": 60,
+	},
+	"datetime": {
+		"callback": paneDateTime,
+		"interval": 2,
+	},
+}
+
 // Simple load average pane
 func paneLoadAvg() string {
 	avg := sigar.LoadAverage{}

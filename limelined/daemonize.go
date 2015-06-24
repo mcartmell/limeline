@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/sevlyar/go-daemon"
+	"github.com/mcartmell/go-daemon"
 	"log"
 )
 

@@ -13,10 +13,11 @@ to reproduce my powerline statusbar without powerline.
 ## Features
 
 * Client/daemon mode: no waiting for the status bar to redraw
-* 3 plugins:
+* 4 plugins:
   * Load average
   * The [Singapore PSI reading](http://www.nea.gov.sg/anti-pollution-radiation-protection/air-pollution-control/psi/psi)
   * Current date and time
+  * Current weather and temperature
 * Configurable colours
 
 ## Installing

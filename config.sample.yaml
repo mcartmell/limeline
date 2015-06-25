@@ -1,4 +1,4 @@
-panes: [loadavg, sghaze, datetime]
+panes: [loadavg, weather, sghaze, datetime]
 plugins:
   loadavg:
     bg: colour154
@@ -8,3 +8,5 @@ plugins:
   datetime:
     fg: colour250
     bg: colour239
+  weather:
+    city_code: "1062617"

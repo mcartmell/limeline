@@ -13,7 +13,7 @@ func getPaneContent(i int) string {
 
 	includeSep := !(i == len(Panes)-1)
 	p := Panes[i]
-	cb := PaneConfig[p]["callback"].(func() string)
+	cb := PaneCallbacks[p]
 	pOpts, _ := PaneConfig[p]["options"].(paneOpts)
 
 	// get foreground colour

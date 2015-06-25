@@ -65,6 +65,8 @@ plugins:
   datetime:
     fg: colour250
     bg: colour239
+  weather:
+    city_code: "1062617"
 ```
 
 ## TODO

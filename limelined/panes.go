@@ -16,17 +16,24 @@ var Panes = []string{"loadavg", "sghaze", "datetime"}
 // Functions to call to load each pane
 var PaneConfig = map[string]map[string]interface{}{
 	"loadavg": {
-		"callback": paneLoadAvg,
 		"interval": 5,
 	},
 	"sghaze": {
-		"callback": paneSGHaze,
 		"interval": 60,
 	},
 	"datetime": {
-		"callback": paneDateTime,
 		"interval": 2,
 	},
+	"weather": {
+		"interval": 60,
+	},
+}
+
+var PaneCallbacks = map[string]func() string{
+	"loadavg":  paneLoadAvg,
+	"sghaze":   paneSGHaze,
+	"datetime": paneDateTime,
+	"weather":  paneWeather,
 }
 
 // Simple load average pane

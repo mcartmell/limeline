@@ -18,6 +18,20 @@ type paneOpts struct {
 
 var validPaneOpts = [...]string{"fg", "bg"}
 
+func readConfig(pane string, key string) interface{} {
+	_, ok := PaneConfig[pane]
+	if ok {
+		if iface, ok := PaneConfig[pane]["raw"]; ok {
+			if cfg, ok := iface.(map[interface{}]interface{}); ok {
+				if val, ok := cfg[key]; ok {
+					return val
+				}
+			}
+		}
+	}
+	return nil
+}
+
 func loadConfig() {
 	cfg_file := fmt.Sprintf("%s/.config/limeline/config.yaml", os.Getenv("HOME"))
 	if _, err := os.Stat(cfg_file); err != nil {
@@ -50,6 +64,7 @@ func loadConfig() {
 							}
 						}
 						PaneConfig[key]["options"] = po
+						PaneConfig[key]["raw"] = paneCfg
 					}
 				}
 			}

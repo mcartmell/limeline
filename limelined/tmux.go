@@ -20,10 +20,14 @@ func getPaneContent(i int) string {
 	pOpts, _ := PaneConfig[p]["options"].(paneOpts)
 
 	// get foreground colour
-	fgColour = pOpts.fgColour()
+	if fgColour, ok = pOpts.fgColour(); !ok {
+		fgColour = toggleColour(i, 1)
+	}
 
 	// get background colour
-	bgColour = pOpts.bgColour()
+	if bgColour, ok = pOpts.bgColour(); !ok {
+		bgColour = toggleColour(i, 0)
+	}
 
 	content := cb()
 
@@ -37,13 +41,20 @@ func getPaneContent(i int) string {
 
 func getSep(iPane int, bgColour string) (s string) {
 	nextOpts, _ := PaneConfig[Panes[iPane+1]]["options"].(paneOpts)
-	nextBG := nextOpts.bgColour()
+	nextBG, ok := nextOpts.bgColour()
+	if !ok {
+		nextBG = toggleColour(iPane+1, 0)
+	}
+	nextFG, ok := nextOpts.fgColour()
+	if !ok {
+		nextFG = toggleColour(iPane+1, 1)
+	}
 	if nextBG == bgColour {
 		// same background colour, use regular separator
-		s = rightSep(nextOpts.fgColour(), "", "")
+		s = rightSep(nextFG, "", "")
 	} else {
 		// diff background colour, use thick separator
-		s = rightSep(nextOpts.bgColour(), bgColour, "")
+		s = rightSep(nextBG, bgColour, "")
 	}
 	return s
 }

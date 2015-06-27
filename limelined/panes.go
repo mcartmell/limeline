@@ -15,7 +15,8 @@ import (
 var Panes = []string{"loadavg", "sghaze", "datetime"}
 
 // Functions to call to load each pane
-var PaneConfig = map[string]map[string]interface{}{
+
+var PaneConfig = paneConfig{
 	"loadavg": {
 		"interval": 5,
 	},
@@ -80,22 +81,14 @@ func paneDateTime() string {
 
 func paneLastFM() string {
 	var api_key, api_secret, username string
-	if cfg_key, ok := readConfig("lastfm", "api_key"); ok {
-		if api_str, ok := cfg_key.(string); ok {
-			api_key = api_str
-		}
+	var ok bool
+	if api_key, ok = PaneConfig.getString("lastfm", "api_key"); !ok {
+		return ""
 	}
-	if cfg_secret, ok := readConfig("lastfm", "api_secret"); ok {
-		if api_str, ok := cfg_secret.(string); ok {
-			api_secret = api_str
-		}
+	if api_secret, ok = PaneConfig.getString("lastfm", "api_secret"); !ok {
+		return ""
 	}
-	if cfg_user, ok := readConfig("lastfm", "user"); ok {
-		if api_str, ok := cfg_user.(string); ok {
-			username = api_str
-		}
-	}
-	if api_key == "" || api_secret == "" || username == "" {
+	if username, ok = PaneConfig.getString("lastfm", "user"); !ok {
 		return ""
 	}
 	lfm := lastfm.New(api_key, api_secret)

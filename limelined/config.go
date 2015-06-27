@@ -16,6 +16,31 @@ type paneOpts struct {
 	Bg *string
 }
 
+type paneConfig map[string]map[string]interface{}
+
+func (self *paneConfig) get(pane string, key string) (interface{}, bool) {
+	_, ok := PaneConfig[pane]
+	if ok {
+		if iface, ok := PaneConfig[pane]["raw"]; ok {
+			if cfg, ok := iface.(map[interface{}]interface{}); ok {
+				if val, ok := cfg[key]; ok {
+					return val, true
+				}
+			}
+		}
+	}
+	return nil, false
+}
+
+func (self *paneConfig) getString(pane string, key string) (string, bool) {
+	if val, ok := self.get(pane, key); ok {
+		if str, ok := val.(string); ok {
+			return str, true
+		}
+	}
+	return "", false
+}
+
 var validPaneOpts = [...]string{"fg", "bg"}
 
 func readConfig(pane string, key string) (interface{}, bool) {
@@ -84,18 +109,18 @@ func loadConfig() {
 
 func (self *paneOpts) fgColour() (fgColour string) {
 	if self.Fg == nil {
-		fgColour = DEFAULT_FG
+		return "", false
 	} else {
 		fgColour = *self.Fg
 	}
-	return fgColour
+	return fgColour, true
 }
 
 func (self *paneOpts) bgColour() (bgColour string) {
 	if self.Bg == nil {
-		bgColour = DEFAULT_BG
+		return "", false
 	} else {
 		bgColour = *self.Bg
 	}
-	return bgColour
+	return bgColour, true
 }

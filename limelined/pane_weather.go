@@ -59,11 +59,7 @@ var weatherSymbols = map[string]string{
 }
 
 func paneWeather() string {
-	cfg, ok := readConfig("weather", "city_code")
-	if !ok {
-		return ""
-	}
-	city_code, ok := cfg.(string)
+	city_code, ok := PaneConfig.getString("weather", "city_code")
 	if !ok {
 		fmt.Println("error")
 		return ""

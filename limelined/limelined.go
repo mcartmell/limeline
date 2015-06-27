@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"log"
 	"net"
@@ -112,5 +113,17 @@ func daemonWorker() {
 }
 
 func main() {
-	daemonize()
+	flag.Parse()
+	args := flag.Args()
+	if len(args) > 0 {
+		switch args[0] {
+		case "test":
+			loadConfig()
+			for i, _ := range Panes {
+				fmt.Print(getPaneContent(i))
+			}
+		}
+	} else {
+		daemonize()
+	}
 }

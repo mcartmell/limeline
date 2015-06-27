@@ -18,18 +18,18 @@ type paneOpts struct {
 
 var validPaneOpts = [...]string{"fg", "bg"}
 
-func readConfig(pane string, key string) interface{} {
+func readConfig(pane string, key string) (interface{}, bool) {
 	_, ok := PaneConfig[pane]
 	if ok {
 		if iface, ok := PaneConfig[pane]["raw"]; ok {
 			if cfg, ok := iface.(map[interface{}]interface{}); ok {
 				if val, ok := cfg[key]; ok {
-					return val
+					return val, true
 				}
 			}
 		}
 	}
-	return nil
+	return nil, false
 }
 
 func loadConfig() {

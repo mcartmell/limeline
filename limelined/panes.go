@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/cloudfoundry/gosigar" // for system info
+	"github.com/shkh/lastfm-go/lastfm"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -27,6 +28,9 @@ var PaneConfig = map[string]map[string]interface{}{
 	"weather": {
 		"interval": 60,
 	},
+	"lastfm": {
+		"interval": 20,
+	},
 }
 
 var PaneCallbacks = map[string]func() string{
@@ -34,6 +38,7 @@ var PaneCallbacks = map[string]func() string{
 	"sghaze":   paneSGHaze,
 	"datetime": paneDateTime,
 	"weather":  paneWeather,
+	"lastfm":   paneLastFM,
 }
 
 // Simple load average pane
@@ -71,4 +76,35 @@ func paneSGHaze() string {
 // Simple datetime pane
 func paneDateTime() string {
 	return time.Now().Format("2006-01-02 15:04")
+}
+
+func paneLastFM() string {
+	var api_key, api_secret, username string
+	if cfg_key, ok := readConfig("lastfm", "api_key"); ok {
+		if api_str, ok := cfg_key.(string); ok {
+			api_key = api_str
+		}
+	}
+	if cfg_secret, ok := readConfig("lastfm", "api_secret"); ok {
+		if api_str, ok := cfg_secret.(string); ok {
+			api_secret = api_str
+		}
+	}
+	if cfg_user, ok := readConfig("lastfm", "user"); ok {
+		if api_str, ok := cfg_user.(string); ok {
+			username = api_str
+		}
+	}
+	if api_key == "" || api_secret == "" || username == "" {
+		return ""
+	}
+	lfm := lastfm.New(api_key, api_secret)
+	if res, err := lfm.User.GetRecentTracks(lastfm.P{"user": username, "limit": 1}); err != nil {
+		return ""
+	} else {
+		lastTrack := res.Tracks[0]
+		artist := lastTrack.Artist.Name
+		name := lastTrack.Name
+		return fmt.Sprintf("♫ %s - %s", artist, name)
+	}
 }

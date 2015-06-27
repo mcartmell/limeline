@@ -2,7 +2,7 @@
 
 My simple statusbar for tmux, written in Go, inspired by [Powerline](https://github.com/powerline/powerline) and [vim-airline](https://github.com/bling/vim-airline)
 
-![img](https://github.com/mcartmell/limeline/wiki/screenshots/limeline.png)
+![img](https://github.com/mcartmell/limeline/wiki/screenshots/limeline2.png)
 
 ## Status
 

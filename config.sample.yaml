@@ -1,4 +1,4 @@
-panes: [loadavg, weather, sghaze, datetime]
+panes: [lastfm, loadavg, weather, sghaze, datetime]
 plugins:
   loadavg:
     bg: colour154
@@ -10,3 +10,7 @@ plugins:
     bg: colour239
   weather:
     city_code: "1062617"
+  lastfm:
+    api_key: "<your lastfm key>"
+    api_secret: "<your lastfm api secret>"
+    user: "<your lastfm user>"

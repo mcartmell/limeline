@@ -13,11 +13,12 @@ to reproduce my powerline statusbar without powerline.
 ## Features
 
 * Client/daemon mode: no waiting for the status bar to redraw
-* 4 plugins:
+* 5 plugins:
   * Load average
   * The [Singapore PSI reading](http://www.nea.gov.sg/anti-pollution-radiation-protection/air-pollution-control/psi/psi)
   * Current date and time
   * Current weather and temperature
+  * Last track played on LastFM
 * Configurable colours
 
 ## Installing
@@ -52,24 +53,7 @@ cp $GOPATH/src/github.com/mcartmell/limeline/config.sample.yaml ~/.config/limeli
 
 ## Configuration
 
-```yaml
-# Which panes should be displayed
-panes: [loadavg, sghaze, datetime]
-
-# Foreground and background colour of plugins. If not set, will use default
-plugins:
-  loadavg:
-    bg: colour154
-    fg: colour16
-  sghaze:
-    fg: colour82
-  datetime:
-    fg: colour250
-    bg: colour239
-  weather:
-    city_code: "1062617"
-```
-
+See [the sample config](https://github.com/mcartmell/limeline/blob/master/config.sample.yaml) for an example.
 ## TODO
 
 * More plugins

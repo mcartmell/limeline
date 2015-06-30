@@ -8,6 +8,14 @@ import (
 const DEFAULT_FG = "colour154"
 const DEFAULT_BG = "colour234"
 
+func toggleColour(i int, sw int) string {
+	if i%2 == sw {
+		return DEFAULT_BG
+	} else {
+		return DEFAULT_FG
+	}
+}
+
 func getPaneContent(i int) string {
 	var fgColour, bgColour string
 

@@ -107,7 +107,8 @@ func loadConfig() {
 	}
 }
 
-func (self *paneOpts) fgColour() (fgColour string) {
+func (self *paneOpts) fgColour() (string, bool) {
+	var fgColour string
 	if self.Fg == nil {
 		return "", false
 	} else {
@@ -116,7 +117,8 @@ func (self *paneOpts) fgColour() (fgColour string) {
 	return fgColour, true
 }
 
-func (self *paneOpts) bgColour() (bgColour string) {
+func (self *paneOpts) bgColour() (string, bool) {
+	var bgColour string
 	if self.Bg == nil {
 		return "", false
 	} else {

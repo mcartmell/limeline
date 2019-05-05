@@ -4,15 +4,16 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/cloudfoundry/gosigar" // for system info
-	"github.com/shkh/lastfm-go/lastfm"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	sigar "github.com/cloudfoundry/gosigar" // for system info
+	"github.com/shkh/lastfm-go/lastfm"
 )
 
 // Display these panes in order
-var Panes = []string{"loadavg", "sghaze", "datetime"}
+var Panes = []string{"loadavg", "sghaze", "bitcoin", "datetime"}
 
 // Functions to call to load each pane
 
@@ -32,6 +33,9 @@ var PaneConfig = paneConfig{
 	"lastfm": {
 		"interval": 20,
 	},
+	"bitcoin": {
+		"interval": 60,
+	},
 }
 
 var PaneCallbacks = map[string]func() string{
@@ -40,6 +44,7 @@ var PaneCallbacks = map[string]func() string{
 	"datetime": paneDateTime,
 	"weather":  paneWeather,
 	"lastfm":   paneLastFM,
+	"bitcoin":  paneBitcoin,
 }
 
 // Simple load average pane
@@ -47,6 +52,32 @@ func paneLoadAvg() string {
 	avg := sigar.LoadAverage{}
 	avg.Get()
 	return fmt.Sprintf("%.2f %.2f %.2f", avg.One, avg.Five, avg.Fifteen)
+}
+
+func paneBitcoin() string {
+	type BTC struct {
+		BPI struct {
+			USD struct {
+				Rate float64 `json:"rate_float"`
+			}
+		}
+	}
+	res, err := http.Get("https://api.coindesk.com/v1/bpi/currentprice.json")
+	if err != nil {
+		return ""
+	}
+	jsonb, err := ioutil.ReadAll(res.Body)
+	defer func() {
+		res.Body.Close()
+	}()
+	if err != nil {
+		return ""
+	}
+	btc := new(BTC)
+	if err := json.Unmarshal(jsonb, &btc); err != nil {
+		return ""
+	}
+	return fmt.Sprintf("₿ %.2f", btc.BPI.USD.Rate)
 }
 
 // Singapore haze. See https://github.com/mcartmell/powerline-segment-sghaze

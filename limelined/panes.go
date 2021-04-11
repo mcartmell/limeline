@@ -13,7 +13,7 @@ import (
 )
 
 // Display these panes in order
-var Panes = []string{"loadavg", "sghaze", "bitcoin", "datetime"}
+var Panes = []string{"loadavg", "bitcoin", "datetime"}
 
 // Functions to call to load each pane
 
